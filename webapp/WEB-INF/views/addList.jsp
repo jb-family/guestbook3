@@ -31,7 +31,7 @@
 					<td style="width:30px;">${gList.no}</td>
 					<td style="width:100px;">${gList.name}</td>
 					<td style="width:270px;">${gList.regDate}</td>	
-					<td><a href ="/guestbook3/deleteForm?no=${gList.no}">삭제</a></td>
+					<td><a href ="/guestbook3/deleteForm/${gList.no}">삭제</a></td>
 				</tr>
 				<tr>
 					<td rowspan="2" colspan="4">첫번째 방명록내용<br>

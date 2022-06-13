@@ -41,9 +41,11 @@ public class GuestController {
 		return "redirect:/addList";
 	}
 	
-	@RequestMapping(value="/deleteForm", method= {RequestMethod.GET, RequestMethod.POST})
-	public String deleteForm() {
+	@RequestMapping(value="/deleteForm/{no}", method= {RequestMethod.GET, RequestMethod.POST})
+	public String deleteForm(Model model, @PathVariable ("no") int no) {
 		System.out.println("Controller > deleteForm");
+		
+		model.addAttribute("no",no);
 		
 		return "/WEB-INF/views/deleteForm.jsp";
 	}
