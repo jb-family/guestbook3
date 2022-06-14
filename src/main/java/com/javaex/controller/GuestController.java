@@ -41,7 +41,8 @@ public class GuestController {
 		
 		//Dao만들기
 		//GuestBookDao guestBookDao = new GuestBookDao();
-		guestService.guestBookInsert(guestBookVo);
+		int count = guestService.guestBookInsert(guestBookVo);
+		System.out.println(count);
 		
 		return "redirect:/addList";
 	}
@@ -67,7 +68,8 @@ public class GuestController {
 		
 		if(password.equals(guestBookVo.getPassword())) {
 			
-			guestService.guestBookDelete(guestBookVo);
+			int count = guestService.guestBookDelete(guestBookVo);
+			System.out.println(count);
 			System.out.println("삭제되었습니다.");
 			return "redirect:/addList";	
 		}else {
