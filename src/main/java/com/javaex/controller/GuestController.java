@@ -2,6 +2,7 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.dao.GuestBookDao;
+import com.javaex.service.GuestService;
 import com.javaex.vo.GuestBookVo;
 
 @Controller
 public class GuestController {
+	@Autowired
+	private GuestService guestService;
+	
 	
 	//등록폼 메소드
 	@RequestMapping(value="/addList", method= {RequestMethod.GET, RequestMethod.POST})
@@ -22,12 +27,12 @@ public class GuestController {
 		System.out.println("Controller > addList");
 		
 		//GuestDao만들기
-		GuestBookDao guestBookDao = new GuestBookDao();
-		List<GuestBookVo> guestBookVo = guestBookDao.guestBookList();
+		//GuestBookDao guestBookDao = new GuestBookDao();
+		List<GuestBookVo> guestBookVo = guestService.guestBookList();
 		
 		model.addAttribute("gList",guestBookVo);
 		
-		return "/WEB-INF/views/addList.jsp";
+		return "addList";
 	}
 
 	@RequestMapping(value="/add", method= {RequestMethod.GET, RequestMethod.POST})
@@ -35,8 +40,8 @@ public class GuestController {
 		System.out.println("Controller > add");
 		
 		//Dao만들기
-		GuestBookDao guestBookDao = new GuestBookDao();
-		guestBookDao.guestBookInsert(guestBookVo);
+		//GuestBookDao guestBookDao = new GuestBookDao();
+		guestService.guestBookInsert(guestBookVo);
 		
 		return "redirect:/addList";
 	}
@@ -47,7 +52,7 @@ public class GuestController {
 		
 		model.addAttribute("no",no);
 		
-		return "/WEB-INF/views/deleteForm.jsp";
+		return "deleteForm";
 	}
 	
 	
@@ -57,12 +62,12 @@ public class GuestController {
 		System.out.println("Controller > delete");
 		
 		//Dao만들기
-		GuestBookDao guestBookDao = new GuestBookDao();
-		GuestBookVo guestBookVo = guestBookDao.guestBookList(no);
+		//GuestBookDao guestBookDao = new GuestBookDao();
+		GuestBookVo guestBookVo = guestService.guestBookList(no);
 		
 		if(password.equals(guestBookVo.getPassword())) {
 			
-			guestBookDao.guestBookDelete(guestBookVo);
+			guestService.guestBookDelete(guestBookVo);
 			System.out.println("삭제되었습니다.");
 			return "redirect:/addList";	
 		}else {
